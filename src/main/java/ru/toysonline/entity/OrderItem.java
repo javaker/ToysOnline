@@ -2,7 +2,6 @@ package ru.toysonline.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import ru.toysonline.entity.Item;
 
 import javax.persistence.*;
 
@@ -27,6 +26,11 @@ public class OrderItem {
     @ManyToOne()
     @JoinColumn(name = "order_id")
     private Order order_id;
+
+    public OrderItem(Item item, int quantity) {
+        this.item = item;
+        this.quantity = quantity;
+    }
 
     public int getPrice(){
         return item.getPrice() * quantity;

@@ -1,23 +1,34 @@
 package ru.toysonline.core;
 
 
-import ru.toysonline.dao.DBHelper;
-import ru.toysonline.entity.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.toysonline.Pay;
+import ru.toysonline.dao.DBHelper;
+import ru.toysonline.entity.Item;
+import ru.toysonline.entity.Order;
+import ru.toysonline.entity.OrderItem;
+import ru.toysonline.entity.User;
 
-import javax.inject.Inject;
-import javax.smartcardio.Card;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
+@Component
 public class Shop {
 
-    @Inject
+    /*
+    We can omit @Autowired. Spring find our bean DBHelperImpl
+    and inject he here.
+     */
+    @Autowired
+    public Shop(DBHelper dbHelper) {
+        this.dbHelper = dbHelper;
+    }
+
     private DBHelper dbHelper;
 
     BufferedReader reader;
@@ -53,10 +64,7 @@ public class Shop {
 
 
     public OrderItem createOrderItem(Item item, int quantity) {
-        OrderItem orderItem = new OrderItem();
-        orderItem.setItem(item);
-        orderItem.setQuantity(quantity);
-        return orderItem;
+        return new OrderItem(item, quantity);
     }
 
     public User userLogin() throws IOException {
@@ -67,8 +75,7 @@ public class Shop {
 
         reader = new BufferedReader(new InputStreamReader(System.in));
 
-        User user = dbHelper.getUser(reader.readLine());
-        return user;
+        return dbHelper.getUser(reader.readLine());
     }
 
     public void beginBuy(User user, boolean begin) throws IOException {
@@ -77,14 +84,11 @@ public class Shop {
         String status = null;
         String address = null;
         String pay = null;
-        OrderItem orderItem = null;
-
         List<OrderItem> orderItems = null;
 
         if (begin) {
 
             System.out.println("We need some information for Destination and Pay");
-
             System.out.println("Input destination address");
             reader = new BufferedReader(new InputStreamReader(System.in));
             address = reader.readLine();

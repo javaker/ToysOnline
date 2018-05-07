@@ -2,8 +2,6 @@ package ru.toysonline.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import ru.toysonline.entity.Item;
-import ru.toysonline.entity.Order;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,8 +19,4 @@ public class Basket {
 
     @OneToMany(mappedBy = "basket_id", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Order> orders;
-
-
-
-
 }

@@ -2,8 +2,6 @@ package ru.toysonline.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import ru.toysonline.OrderStatus;
-import ru.toysonline.Pay;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -20,7 +18,12 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToMany(mappedBy = "order_id", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    /*
+    If not LAZY we receive double result, because Hibernate
+    do left outer join between 3 tables: baskets, orders and orderItems.
+    With LAZY we have join between two tables baskets and orders.
+     */
+    @OneToMany(mappedBy = "order_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 
     @Column(name = "address")
@@ -31,7 +34,6 @@ public class Order {
 
     @Column(name = "cost")
     private int cost;
-
 
     @Column(name = "status")
     private String status;

@@ -1,22 +1,28 @@
 package ru.toysonline.dao;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.toysonline.entity.Item;
-
 import ru.toysonline.entity.User;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.Query;
 import java.util.List;
 
-
+@Service
 public class DBHelperImp implements DBHelper {
 
-    @Inject
     private EntityManager entityManager;
 
+    /*
+    We can omit @Autowired. Spring find our bean DBHelperImpl
+    and inject he here.
+     */
+    @Autowired
+    public DBHelperImp(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     @Override
     public Item getItem(int id) {
@@ -25,9 +31,7 @@ public class DBHelperImp implements DBHelper {
 
     @Override
     public List<Item> getItems() {
-        Query result = entityManager.createQuery("Select i From Item i");
-
-        return result.getResultList();
+        return entityManager.createQuery("Select i From Item i").getResultList();
     }
 
     @Override
