@@ -31,10 +31,10 @@ public class Shop {
 
     private DBHelper dbHelper;
 
-    BufferedReader reader;
+    private BufferedReader reader;
 
 
-    public List<Item> getAllItems() {
+    public List getAllItems() {
         return dbHelper.getItems();
     }
 
@@ -217,6 +217,7 @@ public class Shop {
 
         printOrderItem(user);
 
+        System.out.println("<<<<<---------------------------------->>>>>");
         System.out.println("Amount price: " + order.getCost());
         System.out.println("Good Buy, come back)");
         System.exit(0);

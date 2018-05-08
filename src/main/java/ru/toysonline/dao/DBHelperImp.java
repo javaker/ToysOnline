@@ -30,7 +30,7 @@ public class DBHelperImp implements DBHelper {
     }
 
     @Override
-    public List<Item> getItems() {
+    public List getItems() {
         return entityManager.createQuery("Select i From Item i").getResultList();
     }
 
@@ -54,5 +54,4 @@ public class DBHelperImp implements DBHelper {
         entityManager.persist(user);
         entityManager.getTransaction().commit();
     }
-
 }
