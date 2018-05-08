@@ -6,6 +6,7 @@ import ru.toysonline.entity.Basket;
 import ru.toysonline.entity.Order;
 import ru.toysonline.entity.User;
 
+import javax.persistence.EntityManager;
 import java.io.IOException;
 
 public class Main {
@@ -14,7 +15,12 @@ public class Main {
     public static void main(String[] args) throws IOException {
         context = new AnnotationConfigApplicationContext(ShopConfiguration.class);
 
-        Shop shop = context.getBean(Shop.class);
+        Shop shop = (Shop) context.getBean("Pets");
+
+//        EntityManager em = (EntityManager) context.getBean("EnMan");
+
+//        System.out.println(em);
+
         User user = shop.userLogin();
 
         boolean newUser = true;

@@ -2,6 +2,7 @@ package ru.toysonline.core;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ru.toysonline.Pay;
 import ru.toysonline.dao.DBHelper;
@@ -10,6 +11,7 @@ import ru.toysonline.entity.Order;
 import ru.toysonline.entity.OrderItem;
 import ru.toysonline.entity.User;
 
+import javax.inject.Named;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Component
+@Component("Pets")
 public class Shop {
 
     /*
@@ -25,7 +27,7 @@ public class Shop {
     and inject he here.
      */
     @Autowired
-    public Shop(DBHelper dbHelper) {
+    public Shop(@Qualifier("HibernateImpl") DBHelper dbHelper) {
         this.dbHelper = dbHelper;
     }
 
